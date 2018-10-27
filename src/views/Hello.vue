@@ -19,6 +19,16 @@
             - <span v-on:mousemove.stop.prevent>DEAD SPOT</span>
         </p>
         <input type="text" v-on:keyup.enter.space="alertMe">
+        <hr>
+        <!--v-model listen changes and reflect the change all part were we use de variable-->
+        <input type="text" v-model="name">
+        <p>{{name}}</p>
+        <hr>
+        <button @click="counter++">Increase</button>
+        <button @click="counter--">Decrease</button>
+        <button @click="secondCounter++">Increase Second</button>
+        <p>Counter: {{ counter }} || SecondCounter {{ secondCounter}}</p>
+        <p>{{ result() }} || {{ output }}</p>
     </div>
 </template>
 
@@ -26,17 +36,25 @@
 
     export default {
         name: "Hello",
-        data () {
+        data () { //data its not reactive
             return {
                 title: 'Hello World!',
                 link: 'http://google.com',
                 finishedLink: '<a href="http://google.com">Google</a>',
                 counter: 0,
+                secondCounter: 0,
                 x: 0,
-                y: 0
+                y: 0,
+                name: 'Max'
             }
         },
-        methods: {
+        computed: { //Excecutes only if the content inside of it changes
+          output (){
+              console.log('Computed')
+              return this.counter > 5 ? 'Greater than 5' : 'Smaller than 5'
+          }
+        },
+        methods: { //exceutes every time because vuejs doesn now the content of the functions
             changeTitle (event) {
                 this.title = event.target.value
             },
@@ -58,6 +76,10 @@
             },
             alertMe() {
                 alert('Alert!')
+            },
+            result(){
+                console.log('Method')
+                return this.counter > 5 ? 'Greater than 5' : 'Smaller than 5'
             }
         }
     }
